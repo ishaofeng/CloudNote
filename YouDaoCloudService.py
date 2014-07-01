@@ -16,8 +16,9 @@ import mimetypes
 import os
 
 class YouDaoCloudService():
-    def __init__(self, conf):
+    def __init__(self, conf, logger):
         self.conf = conf
+        self.logger = logger
         self.oauth_consumer_token = self.conf.get("oauth", "oauth_consumer_token")
         self.oauth_consumer_secret = self.conf.get("oauth", "oauth_consumer_secret")
         self.consumer = oauth.Consumer(key=self.oauth_consumer_token, secret=self.oauth_consumer_secret)
@@ -66,7 +67,7 @@ class YouDaoCloudService():
         self.client = oauth.Client(self.consumer, token=self.token)
         self.conf.set("oauth", "oauth_token", self.oauth_token)
         self.conf.set("oauth", "oauth_secret", self.oauth_secret)
-        saveConf(conf)
+        saveConf(self.conf)
 
         return {"token": self.oauth_token, "secret": self.oauth_secret}
 
@@ -144,7 +145,7 @@ class YouDaoCloudService():
 
     def downloadResource(self, url):
         resp, content = self.client.request(url, "GET")
-        return resp, json.loads(content)
+        return resp, content
 
     def multipart_encode(self, vars, files, boundary = None, buf = None):
         if boundary is None:
@@ -174,7 +175,7 @@ class YouDaoCloudService():
 
 if __name__ == "__main__":
     conf = getConf()
-    service = YouDaoCloudService(conf)
+    service = YouDaoCloudService(conf, None)
     print service.isAuth
     if service.checkAuth() == False:
         tokens =  service.requestToken()
@@ -189,16 +190,16 @@ if __name__ == "__main__":
     print service.getUser()
     resp, notebooks = service.getAllNotebook()
     print notebooks
-    print notebooks[0]["path"]
+#    print notebooks[0]["path"]
     resp, items = service.listNotebook(notebooks[3]["path"])
     print items
     #print service.createNotebook("shaotest")
     shaotest = "/8F2A32B3EA534E5C995F2A2896A93191"
     resp, items = service.listNotebook(shaotest)
     #print service.createNote(shaotest, "hello workd", title="test")
-
+#
     print service.getNote((items)[0])
-    print service.publishNote((items)[0])
-    print service.uploadResource("oauth.py")
+#    print service.publishNote((items)[0])
+#    print service.uploadResource("oauth.py")
 
 

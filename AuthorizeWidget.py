@@ -14,9 +14,9 @@ from PyQt4.QtCore import *
 from PyQt4.QtWebKit import *
 from PyQt4.QtNetwork import *
 
-class AuthorizeWidget(QWidget):
+class AuthorizeWidget(QDialog):
     def __init__(self, authorize_url, parent=None):
-        QWidget.__init__(self, parent)
+        QDialog.__init__(self, parent)
         self.authorize_url = authorize_url
 
         self.setWindowTitle(APP_NAME)
@@ -70,12 +70,8 @@ class AuthorizeWidget(QWidget):
 
     @staticmethod
     def getVerifier(url):
-        app = QApplication(sys.argv)
-
         w = AuthorizeWidget(url)
-        w.show()
         w.loadAuthorize()
-        QObject.connect(app, SIGNAL("lastWindowClosed()"), app, SLOT("quit()"))
-        app.exec_()
+        w.exec_()
 
         return w.verifier

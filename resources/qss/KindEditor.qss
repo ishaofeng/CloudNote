@@ -1,0 +1,21 @@
+QLabel {
+    color: gray;
+}
+
+QLabel#createTimeLabel, QLabel#modifyTimeLabel {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+QLabel#authorLabel {
+    padding-left: 5px;
+}
+
+QLabel#sourceLabel {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+QLineEdit#authorLineEdit {
+    padding-right: 5px;
+}

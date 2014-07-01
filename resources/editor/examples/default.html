@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Default Examples</title>
+		<style>
+			form {
+				margin: 0;
+			}
+			textarea {
+				display: block;
+			}
+            .metainfo {
+                height: 24px;
+            }
+            .metainfo div {
+                float: left;
+                padding: 0px 20px 0px 0px;
+            }
+            .metainfo label {
+                text-align: center;
+            }
+            .clearall {
+                clear: both;
+            }
+		</style>
+		<link rel="stylesheet" href="../themes/default/default.css" />
+		<script charset="utf-8" src="../kindeditor-min.js"></script>
+		<script charset="utf-8" src="../lang/zh_CN.js"></script>
+		<script>
+			var editor;
+            var xmlHttpRequest;
+            function afterUpload(url)
+            {
+            }
+            
+            function setHtml(path)
+            {
+                getHtml("../note" + path + "/index.html")
+            }
+
+            function createXmlHttpRequest()
+            {
+                if (window.ActiveXObject)
+                {
+                    return new ActiveXObject("Microsoft.XMLHTTP")
+                }
+                else if (window.XMLHttpRequest)
+                {
+                    return new XMLHttpRequest();
+                }
+            }
+
+            function getHtml(url)
+            {
+                xmlHttpRequest = createXmlHttpRequest();
+                xmlHttpRequest.onreadystatechange = contentReady;
+                xmlHttpRequest.open("GET", url, true)
+                xmlHttpRequest.send(null);
+            }
+
+            function contentReady()
+            {
+                editor.html(xmlHttpRequest.responseText)
+            }
+
+            options = {
+                allowFileManager : true,
+                items : [
+                    'undo', 'redo', '|', 'preview', 'code', 'cut', 'copy', 'paste',
+                    'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                    'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                    'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen',
+                    'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                    'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image'
+                    , 'insertfile', 'table', 'hr', 'emoticons', 'pagebreak',
+                    'anchor', 'link', 'unlink'
+                ],
+                afterUpload : afterUpload,
+                uploadJson: "/upload",
+                allowImageRemote: false,
+                afterSelectFile : afterUpload
+
+            }
+			KindEditor.ready(function(K) {
+				editor = K.create('textarea[name="content"]', options);
+			});
+		</script>
+	</head>
+    <body>
+        <textarea name="content" style="visibility:hidden;">KindEditor</textarea>
+	</body>
+</html>

@@ -9,6 +9,8 @@ APP_NAME = "CloudNote"
 APP_PATH = "%s/.%s" % (os.path.expanduser("~"), APP_NAME)
 CONFIG_FILE = "%s.ini" % APP_NAME
 CONFIG_PATH = "%s/%s" % (APP_PATH, CONFIG_FILE)
+DATABASE_PATH = "%s/%s.db" % (APP_PATH, APP_NAME)
+LOG_PATH = "%s/%s.log" % (APP_PATH, APP_NAME)
 
 BASE_URL = "http://note.youdao.com"
 
